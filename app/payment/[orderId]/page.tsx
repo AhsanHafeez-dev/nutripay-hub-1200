@@ -20,6 +20,7 @@ interface Order {
     quantity: number
     price: number
     product: {
+      id: string
       name: string
     }
   }>

@@ -18,6 +18,7 @@ interface Product {
   reviewCount: number
   stock: number
   isFeatured: boolean
+  createdAt: string
 }
 
 const categories = ["All", "Nuts", "Dried Fruits", "Seeds", "Premium", "Mixed"]
@@ -90,7 +91,7 @@ export default function ProductsPage() {
         filtered.sort((a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0))
         break
       default:
-        filtered.sort((a, b) => b.createdAt - a.createdAt)
+        filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     }
 
     setFilteredProducts(filtered)

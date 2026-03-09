@@ -12,7 +12,7 @@ model User {
   email         String    @unique
   name          String?
   password      String?
-  role          Role      @default(CUSTOMER)
+  role          String    @default("CUSTOMER")
   emailVerified DateTime?
   image         String?
   createdAt     DateTime  @default(now())
@@ -37,14 +37,16 @@ model Address {
   createdAt   DateTime @default(now())
   
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders      Order[]
   
   @@map("addresses")
 }
 
-enum Role {
-  ADMIN
-  CUSTOMER
-}
+// SQLite doesn't support enums, using string with @default
+// enum Role {
+//   ADMIN
+//   CUSTOMER
+// }
 
 model Product {
   id          String   @id @default(cuid())
@@ -84,7 +86,7 @@ model Order {
   id           String      @id @default(cuid())
   userId       String
   totalAmount  Float
-  status       OrderStatus @default(PENDING)
+  status       String      @default("PENDING")
   paymentId    String?     @unique
   shippingAddressId String
   createdAt    DateTime    @default(now())
@@ -111,10 +113,11 @@ model OrderItem {
   @@map("order_items")
 }
 
-enum OrderStatus {
-  PENDING
-  PROCESSING
-  SHIPPED
-  DELIVERED
-  CANCELLED
-}
+// SQLite doesn't support enums, using string with @default
+// enum OrderStatus {
+//   PENDING
+//   PROCESSING
+//   SHIPPED
+//   DELIVERED
+//   CANCELLED
+// }
