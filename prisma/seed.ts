@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Role, OrderStatus } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -21,7 +21,7 @@ async function main() {
       email: 'admin@nutripay.com',
       name: 'Admin User',
       password: hashedPassword,
-      role: 'ADMIN',
+      role: Role.ADMIN,
       emailVerified: new Date(),
     },
   })
@@ -33,7 +33,7 @@ async function main() {
       email: 'user@example.com',
       name: 'John Doe',
       password: userPassword,
-      role: 'CUSTOMER',
+      role: Role.CUSTOMER,
       emailVerified: new Date(),
     },
   })
@@ -174,7 +174,7 @@ async function main() {
     data: {
       userId: user.id,
       totalAmount: 45.97,
-      status: 'DELIVERED',
+      status: OrderStatus.DELIVERED,
       shippingAddressId: address.id,
       paymentId: 'pi_123456789',
       items: {
@@ -198,7 +198,7 @@ async function main() {
     data: {
       userId: user.id,
       totalAmount: 32.97,
-      status: 'PROCESSING',
+      status: OrderStatus.PROCESSING,
       shippingAddressId: address.id,
       paymentId: 'pi_987654321',
       items: {
